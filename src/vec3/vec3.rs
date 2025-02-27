@@ -9,6 +9,18 @@ pub struct Vec3 {
 }
  
 impl Vec3 {
+    pub fn axis_x(&self) -> Self {
+        Self::new(self.x() + 1.0, self.y(), self.z())
+    }
+
+    pub fn axis_y(&self) -> Self {
+        Self::new(self.x(), self.y() + 1.0, self.z())
+    }
+
+    pub fn axis_z(&self) -> Self {
+        Self::new(self.x(), self.y(), self.z() + 1.0)
+    }
+
     pub fn new(x: f64, y: f64, z: f64) -> Vec3 {
         Vec3 { e: [x, y, z] }
     }
@@ -28,6 +40,25 @@ impl Vec3 {
             common::random_double_range(min, max),
         )
     }
+   
+
+    /// Rotate self around the point p on a definined axis and with a defined angle
+    pub fn rotate_around(&mut self, p: Point3, axis: Vec3, angle: f64) {
+        // Calculer le vecteur entre le point p et le vecteur actuel
+        let mut dir = *self - p;
+        
+        // Appliquer la rotation sur ce vecteur dir (fonction de rotation autour de l'axe)
+        let cos_angle = angle.cos();
+        let sin_angle = angle.sin();
+        let dot = dot(dir, axis);  // Produit scalaire entre le vecteur et l'axe
+        let cross = cross(axis, dir);  // Produit vectoriel entre l'axe et le vecteur
+
+        dir = dir * cos_angle + cross * sin_angle + axis * dot * (1.0 - cos_angle);
+        
+        // Réassigner la nouvelle position
+        *self = p + dir;
+    }
+    
  
     pub fn x(&self) -> f64 {
         self.e[0]
@@ -173,4 +204,15 @@ pub fn random_in_unit_sphere() -> Vec3 {
  
 pub fn random_unit_vector() -> Vec3 {
     unit_vector(random_in_unit_sphere())
+}
+
+
+pub fn rotate_vector(v: Vec3, axis: Vec3, angle: f64) -> Vec3 {
+    let cos_theta = angle.cos();
+    let sin_theta = angle.sin();
+    let unit_axis = unit_vector(axis);
+
+    v * cos_theta
+        + cross(unit_axis, v) * sin_theta
+        + unit_axis * dot(unit_axis, v) * (1.0 - cos_theta)
 }

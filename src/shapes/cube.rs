@@ -1,10 +1,12 @@
 use super::quad::Quad;
 use crate::Ray;
+use crate::Rotate;
 use crate::{HitRecord,Hittable};
 use crate::Point3;
 
 #[derive(Clone,Default)]
 pub struct Cube {
+    center: Point3,
     quads: Vec<Quad>,
 }
 
@@ -56,6 +58,7 @@ impl Cube {
 
         Self {
             quads: vec![front, back, left, right, top, bottom],
+            center
         }
     }
 }
@@ -68,5 +71,13 @@ impl Hittable for Cube {
             }
         }
         false
+    }
+}
+
+impl Rotate for Cube {
+    fn rotate(&mut self, axis: crate::vec3::Vec3, angle: f64) {
+        for side in &mut self.quads {
+            side.rotate_around(self.center, axis, angle);
+        }
     }
 }

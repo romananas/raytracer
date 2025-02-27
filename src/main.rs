@@ -42,8 +42,15 @@ fn main() {
  
     let mut world = HittableList::new();
     // world.add(Box::new(Sphere::new(Point3::new(0.0, 0.0, -1.0), 0.5))); // smol sphere
-    world.add(Box::new(Plane::new(Point3::new(0.0, -0.5, 0.0), Vec3::new(0.0, 1.0, 0.0)))); // le sol
-    world.add(Box::new(Cube::new(Point3::new(0.0, 0.0, -1.0), 1.0)));
+    // world.add(Box::new(Plane::new(Point3::new(0.0, -0.5, 0.0), Vec3::new(0.0, 1.0, 0.0)))); // le sol
+    let mut cube = Cube::new(Point3::new(0.0, 0.0, -1.5), 1.0);
+
+    let axis_x = Vec3::new(0.0, 1.0, 0.0); // Axe X
+    let angle = std::f64::consts::PI / 4.0; // 45° en radians
+
+    cube.rotate(axis_x, angle);
+
+    world.add(Box::new(cube));
  
     // Camera
  
