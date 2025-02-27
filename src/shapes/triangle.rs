@@ -1,5 +1,5 @@
-use crate::hittable::{HitRecord, Hittable};
-use crate::ray::Ray;
+use crate::{HitRecord, Hittable};
+use crate::Ray;
 use crate::vec3::*;
 
 pub struct Triangle {

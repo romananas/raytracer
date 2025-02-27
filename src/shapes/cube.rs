@@ -1,5 +1,6 @@
 use super::quad::Quad;
-use crate::Hittable;
+use crate::Ray;
+use crate::{HitRecord,Hittable};
 use crate::Point3;
 
 #[derive(Clone,Default)]
@@ -60,7 +61,7 @@ impl Cube {
 }
 
 impl Hittable for Cube {
-    fn hit(&self, ray: &crate::ray::Ray, t_min: f64, t_max: f64, rec: &mut crate::hittable::HitRecord) -> bool {
+    fn hit(&self, ray: &Ray, t_min: f64, t_max: f64, rec: &mut HitRecord) -> bool {
         for side in self.quads.clone() {
             if side.hit(ray, t_min, t_max, rec) {
                 return true;

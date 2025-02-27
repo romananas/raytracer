@@ -1,9 +1,5 @@
 mod camera;
-mod color;
 mod common;
-mod hittable;
-mod hittable_list;
-mod ray;
 mod vec3;
 
 mod shapes;
@@ -12,10 +8,7 @@ mod shapes;
 use std::io;
  
 use camera::Camera;
-use color::Color;
-use hittable::{HitRecord, Hittable};
-use hittable_list::HittableList;
-use ray::Ray;
+use vec3::*;
 use shapes::*;
 use vec3::{Point3, Vec3};
  
@@ -70,7 +63,7 @@ fn main() {
                 let r = cam.get_ray(u, v);
                 pixel_color += ray_color(&r, &world, MAX_DEPTH);
             }
-            color::write_color(&mut io::stdout(), pixel_color, SAMPLES_PER_PIXEL);
+            write_color(&mut io::stdout(), pixel_color, SAMPLES_PER_PIXEL);
         }
     }
  
