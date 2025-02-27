@@ -1,16 +1,18 @@
 mod camera;
 mod common;
 mod vec3;
-
 mod shapes;
+mod materials;
 
+use materials::*;
  
 use std::io;
+use std::rc::Rc;
  
 use camera::Camera;
 use vec3::*;
 use shapes::*;
-use vec3::{Point3, Vec3};
+use vec3::Point3;
  
 fn ray_color(r: &Ray, world: &dyn Hittable, depth: i32) -> Color {
     // If we've exceeded the ray bounce limit, no more light is gathered
@@ -20,8 +22,17 @@ fn ray_color(r: &Ray, world: &dyn Hittable, depth: i32) -> Color {
  
     let mut rec = HitRecord::new();
     if world.hit(r, 0.001, common::INFINITY, &mut rec) {
-        let direction = rec.normal + vec3::random_unit_vector();
-        return 0.5 * ray_color(&Ray::new(rec.p, direction), world, depth - 1);
+        let mut attenuation = Color::default();
+        let mut scattered = Ray::default();
+        if rec
+            .mat
+            .as_ref()
+            .unwrap()
+            .scatter(r, &rec, &mut attenuation, &mut scattered)
+        {
+            return attenuation * ray_color(&scattered, world, depth - 1);
+        }
+        return Color::new(0.0, 0.0, 0.0);
     }
  
     let unit_direction = vec3::unit_vector(r.direction());
@@ -41,16 +52,32 @@ fn main() {
     // World
  
     let mut world = HittableList::new();
-    // world.add(Box::new(Sphere::new(Point3::new(0.0, 0.0, -1.0), 0.5))); // smol sphere
-    // world.add(Box::new(Plane::new(Point3::new(0.0, -0.5, 0.0), Vec3::new(0.0, 1.0, 0.0)))); // le sol
-    let mut cube = Cube::new(Point3::new(0.0, 0.0, -1.5), 1.0);
-
-    let axis_x = Vec3::new(0.0, 1.0, 0.0); // Axe X
-    let angle = std::f64::consts::PI / 4.0; // 45° en radians
-
-    cube.rotate(axis_x, angle);
-
-    world.add(Box::new(cube));
+ 
+    let material_ground = Rc::new(Lambertian::new(Color::new(0.8, 0.8, 0.0)));
+    let material_center = Rc::new(Lambertian::new(Color::new(0.7, 0.3, 0.3)));
+    let material_left = Rc::new(Metal::new(Color::new(0.8, 0.8, 0.8), 0.3));
+    let material_right = Rc::new(Metal::new(Color::new(0.8, 0.6, 0.2), 1.0));
+ 
+    world.add(Box::new(Sphere::new(
+        Point3::new(0.0, -100.5, -1.0),
+        100.0,
+        material_ground,
+    )));
+    world.add(Box::new(Sphere::new(
+        Point3::new(0.0, 0.0, -1.0),
+        0.5,
+        material_center,
+    )));
+    world.add(Box::new(Sphere::new(
+        Point3::new(-1.0, 0.0, -1.0),
+        0.5,
+        material_left,
+    )));
+    world.add(Box::new(Sphere::new(
+        Point3::new(1.0, 0.0, -1.0),
+        0.5,
+        material_right,
+    )));
  
     // Camera
  

@@ -73,11 +73,3 @@ impl Hittable for Cube {
         false
     }
 }
-
-impl Rotate for Cube {
-    fn rotate(&mut self, axis: crate::vec3::Vec3, angle: f64) {
-        for side in &mut self.quads {
-            side.rotate_around(self.center, axis, angle);
-        }
-    }
-}

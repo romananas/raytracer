@@ -28,24 +28,3 @@ impl Hittable for Quad {
         tri1.hit(ray, t_min, t_max, rec) || tri2.hit(ray, t_min, t_max, rec)
     }
 }
-
-impl Rotate for Quad {
-    fn rotate(&mut self, axis: Vec3, angle: f64) {
-        // Calculer le centre du quad
-        let center = (self.v0 + self.v1 + self.v2 + self.v3) / 4.0;
-
-        // Appliquer la rotation autour du centre pour chaque sommet
-        self.v0.rotate_around(center, axis, angle);
-        self.v1.rotate_around(center, axis, angle);
-        self.v2.rotate_around(center, axis, angle);
-        self.v3.rotate_around(center, axis, angle);
-    }
-
-    fn rotate_around(&mut self, p: Point3, axis: Vec3, angle: f64) {
-        // Appliquer la rotation autour du point p pour chaque sommet
-        self.v0.rotate_around(p, axis, angle);
-        self.v1.rotate_around(p, axis, angle);
-        self.v2.rotate_around(p, axis, angle);
-        self.v3.rotate_around(p, axis, angle);
-    }
-}
