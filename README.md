@@ -3,13 +3,13 @@ this part is the result of the tutorial i followed : https://the-ray-tracing-roa
 
 ### How to run it :
 
-To run it (not recommanded)
+#### To run it (not recommanded)
 ```sh
 cargo run > img.ppm
 ```
-running it without building it will resolve in a very slow program
+running it without building it will resolve in a very slow execution
 
-building it and run it
+#### building it and run it
 ```sh
     cargo build --release
     ./target/release/ray-tracing > img.ppm
