@@ -15,7 +15,7 @@ use camera::Camera;
 use color::Color;
 use hittable::{HitRecord, Hittable};
 use hittable_list::HittableList;
-use material::{Dielectric, Lambertian, Material, Metal};
+use material::{Dielectric, Lambertian, Metal};
 use ray::Ray;
 use sphere::Sphere;
 use vec3::Point3;
@@ -122,12 +122,7 @@ fn main() {
     // World
  
     // let world = random_scene();
-    let mut world = hittable_list::HittableList::new();
-
-    let sphere  = Sphere::new(Point3::new(0.0, 0.0, -1.0), 1.0, Rc::new(Metal::new(Color::new(20.0, 20.0, 20.0), 0.0)));
-
-    world.add(Box::new(sphere));
- 
+    let world = random_scene();
     // Camera
  
     let lookfrom = Point3::new(13.0, 2.0, 3.0);
