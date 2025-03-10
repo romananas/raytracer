@@ -7,6 +7,7 @@ mod material;
 mod ray;
 mod sphere;
 mod vec3;
+mod quad;
  
 use std::io;
 use std::sync::Arc;
