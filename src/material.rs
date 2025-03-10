@@ -12,10 +12,11 @@ pub trait Material: Send + Sync {
     fn scatter(&self, r_in: &Ray, rec: &HitRecord) -> Option<ScatterRecord>;
 }
  
+#[derive(Clone, Copy)]
 pub struct Lambertian {
     albedo: Color,
 }
- 
+
 impl Lambertian {
     pub fn new(a: Color) -> Lambertian {
         Lambertian { albedo: a }
@@ -38,6 +39,7 @@ impl Material for Lambertian {
     }
 }
  
+#[derive(Clone, Copy)]
 pub struct Metal {
     albedo: Color,
     fuzz: f64,
@@ -68,6 +70,7 @@ impl Material for Metal {
     }
 }
  
+#[derive(Clone, Copy)]
 pub struct Dielectric {
     ir: f64, // Index of refraction
 }

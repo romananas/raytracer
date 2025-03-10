@@ -8,7 +8,10 @@ mod ray;
 mod sphere;
 mod vec3;
 mod quad;
- 
+mod cube;
+mod cylinder;
+mod disk;
+
 use std::io;
 use std::sync::Arc;
  
@@ -22,7 +25,9 @@ use hittable_list::HittableList;
 use material::{Dielectric, Lambertian, Metal};
 use ray::Ray;
 use sphere::Sphere;
-use vec3::Point3;
+use vec3::{Point3,Vec3};
+use cube::Cube;
+use cylinder::Cylinder;
  
 fn ray_color(r: &Ray, world: &dyn Hittable, depth: i32) -> Color {
     // If we've exceeded the ray bounce limit, no more light is gathered
@@ -103,30 +108,55 @@ fn exemple() -> HittableList {
         1.0,
         material3,
     )));
- 
+
     world
 }
 
 fn scene() -> HittableList {
     let mut world = HittableList::new();
 
+    let glass = Arc::new(Dielectric::new(1.5));
+    let copper = Arc::new(Metal::new(Color::new(0.72, 0.45, 0.20), 0.1));
     let ground_material = Arc::new(Lambertian::new(Color::new(0.5, 0.5, 0.5)));
+    
     world.add(Box::new(Sphere::new(
         Point3::new(0.0, -1000.0, 0.0),
         1000.0,
         ground_material,
     )));
 
-    let metal = Arc::new(Metal::new(Color::new(0.7, 0.6, 0.5), 0.0));
-    world.add(Box::new(Quad::new(
-        Point3::new(-1.0, 0.0, 0.0), 
-        Point3::new(-1.0, 1.0, 0.0), 
-        Point3::new(1.0, 1.0, 0.0),
-         metal
+    // // Copper Surface
+    // world.add(Box::new(Quad::new(
+    //     Point3::new(-1.0, 0.0, 0.0),  // Origine en bas à gauche
+    //     Vec3::new(2.0, 0.0, 0.0),     // u : direction horizontale (largeur)
+    //     Vec3::new(0.0, 1.0, 0.0),     // v : direction verticale (hauteur)
+    //     copper.clone()
+    // )));
+
+    // // Glass Orb
+    // world.add(Box::new(Sphere::new(
+    //     Point3::new(1.0, 0.5, -1.0), // Position de la sphère
+    //     0.5,                         // Rayon de la sphère
+    //     glass, // Placeholder pour le matériau
+    // )));
+
+    // world.add(Box::new(Cube::new(
+    //     Point3::new(-1.0, 0.0, -1.0), // Coin inférieur gauche
+    //     Point3::new(1.0, 2.0, 1.0),   // Coin supérieur droit
+    //     copper.clone(),
+    // )));
+
+    world.add(Box::new(Cylinder::new(
+        Point3::new(0.0, 1.0, 0.0), // Centre du cylindre
+        0.5,                        // Rayon
+        2.0,                        // Hauteur
+        copper.clone(),             // Matériau
+        16,                         // Nombre de segments pour la surface latérale
     )));
 
     world
 }
+
 
 fn main() {
     // Image
