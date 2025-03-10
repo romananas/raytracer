@@ -12,6 +12,7 @@ mod quad;
 use std::io;
 use std::sync::Arc;
  
+use quad::Quad;
 use rayon::prelude::*;
  
 use camera::Camera;
@@ -104,7 +105,28 @@ fn random_scene() -> HittableList {
  
     world
 }
- 
+
+fn scene() -> HittableList {
+    let mut world = HittableList::new();
+
+    let ground_material = Arc::new(Lambertian::new(Color::new(0.5, 0.5, 0.5)));
+    world.add(Box::new(Sphere::new(
+        Point3::new(0.0, -1000.0, 0.0),
+        1000.0,
+        ground_material,
+    )));
+
+    let metal = Arc::new(Metal::new(Color::new(0.7, 0.6, 0.5), 0.0));
+    world.add(Box::new(Quad::new(
+        Point3::new(-1.0, 0.0, 0.0), 
+        Point3::new(-1.0, 1.0, 0.0), 
+        Point3::new(1.0, 1.0, 0.0),
+         metal
+    )));
+
+    world
+}
+
 fn main() {
     // Image
  
@@ -116,14 +138,14 @@ fn main() {
  
     // World
  
-    let world = random_scene();
+    let world = scene();
  
     // Camera
  
     let lookfrom = Point3::new(13.0, 2.0, 3.0);
     let lookat = Point3::new(0.0, 0.0, 0.0);
     let vup = Point3::new(0.0, 1.0, 0.0);
-    let dist_to_focus = 10.0;
+    let dist_to_focus = 15.0;
     let aperture = 0.1;
  
     let cam = Camera::new(
