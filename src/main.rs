@@ -1,33 +1,9 @@
-mod camera;
-mod color;
-mod common;
-mod hittable;
-mod hittable_list;
-mod material;
-mod ray;
-mod sphere;
-mod vec3;
-mod quad;
-mod cube;
-mod cylinder;
-mod disk;
+use ray_tracing::*;
 
 use std::io;
 use std::sync::Arc;
- 
-use quad::Quad;
 use rayon::prelude::*;
- 
-use camera::Camera;
-use color::Color;
-use hittable::Hittable;
-use hittable_list::HittableList;
-use material::{Dielectric, Lambertian, Metal};
-use ray::Ray;
-use sphere::Sphere;
-use vec3::{Point3,Vec3};
-use cube::Cube;
-use cylinder::Cylinder;
+
  
 fn ray_color(r: &Ray, world: &dyn Hittable, depth: i32) -> Color {
     // If we've exceeded the ray bounce limit, no more light is gathered
@@ -125,26 +101,26 @@ fn scene() -> HittableList {
         ground_material,
     )));
 
-    // // Copper Surface
-    // world.add(Box::new(Quad::new(
-    //     Point3::new(-1.0, 0.0, 0.0),  // Origine en bas à gauche
-    //     Vec3::new(2.0, 0.0, 0.0),     // u : direction horizontale (largeur)
-    //     Vec3::new(0.0, 1.0, 0.0),     // v : direction verticale (hauteur)
-    //     copper.clone()
-    // )));
+    // Copper Surface
+    world.add(Box::new(Quad::new(
+        Point3::new(-1.0, 0.0, 0.0),  // Origine en bas à gauche
+        Vec3::new(2.0, 0.0, 0.0),     // u : direction horizontale (largeur)
+        Vec3::new(0.0, 1.0, 0.0),     // v : direction verticale (hauteur)
+        copper.clone()
+    )));
 
-    // // Glass Orb
-    // world.add(Box::new(Sphere::new(
-    //     Point3::new(1.0, 0.5, -1.0), // Position de la sphère
-    //     0.5,                         // Rayon de la sphère
-    //     glass, // Placeholder pour le matériau
-    // )));
+    // Glass Orb
+    world.add(Box::new(Sphere::new(
+        Point3::new(1.0, 0.5, -1.0), // Position de la sphère
+        0.5,                         // Rayon de la sphère
+        glass, // Placeholder pour le matériau
+    )));
 
-    // world.add(Box::new(Cube::new(
-    //     Point3::new(-1.0, 0.0, -1.0), // Coin inférieur gauche
-    //     Point3::new(1.0, 2.0, 1.0),   // Coin supérieur droit
-    //     copper.clone(),
-    // )));
+    world.add(Box::new(Cube::new(
+        Point3::new(-1.0, 0.0, -1.0), // Coin inférieur gauche
+        Point3::new(1.0, 2.0, 1.0),   // Coin supérieur droit
+        copper.clone(),
+    )));
 
     world.add(Box::new(Cylinder::new(
         Point3::new(0.0, 1.0, 0.0), // Centre du cylindre
