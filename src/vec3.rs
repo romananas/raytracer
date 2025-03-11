@@ -2,13 +2,48 @@ use std::fmt::{Display, Formatter, Result};
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub};
  
 use crate::common;
- 
+
+/// A 3D vector structure with three components (x, y, z).
+/// This struct provides basic operations for 3D vector arithmetic.
+///
+/// # Examples
+///
+/// ```
+/// let v = Vec3::new(1.0, 2.0, 3.0);
+/// println!("{:?}", v);
+/// ```
+///
+/// The struct implements `Copy`, `Clone`, `Default`, and `Debug` traits.
+///
+/// # Fields
+///
+/// * `e` - An array of three `f64` values representing the x, y, and z components.
 #[derive(Debug,Copy, Clone, Default)]
 pub struct Vec3 {
     e: [f64; 3],
 }
  
 impl Vec3 {
+    /// Creates a new `Vec3` with the given x, y, and z values.
+    ///
+    /// # Arguments
+    ///
+    /// * `x` - The x-component of the vector.
+    /// * `y` - The y-component of the vector.
+    /// * `z` - The z-component of the vector.
+    ///
+    /// # Returns
+    ///
+    /// A new `Vec3` instance.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use raytracer::Vec3;
+    /// 
+    /// let v = Vec3::new(1.0, 2.0, 3.0);
+    /// assert_eq!(v.x(), 1.0);
+    /// ```
     pub fn new(x: f64, y: f64, z: f64) -> Vec3 {
         Vec3 { e: [x, y, z] }
     }
@@ -29,18 +64,22 @@ impl Vec3 {
         )
     }
  
+    /// Returns the x-component of the vector.
     pub fn x(&self) -> f64 {
         self.e[0]
     }
  
+    /// Returns the y-component of the vector.
     pub fn y(&self) -> f64 {
         self.e[1]
     }
  
+    /// Returns the z-component of the vector.
     pub fn z(&self) -> f64 {
         self.e[2]
     }
  
+    /// Returns the lenght of the vector
     pub fn length(&self) -> f64 {
         f64::sqrt(self.length_squared())
     }
