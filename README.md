@@ -10,7 +10,9 @@ from source
 ```bash
   git clone https://github.com/romananas/raytracer
   cd raytracer
-  bash build.sh
+
+  cargo build --release
+  ./target/release/raytracer > img.ppm
 ```
 
 ## Exemples of results
