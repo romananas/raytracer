@@ -1,7 +1,7 @@
 # Ray-Tracing (RT)
 this part is the result of the tutorial i followed : https://the-ray-tracing-road-to-rust.vercel.app/
 
-### How to run it :
+## How to run it :
 
 #### To run it (not recommanded)
 ```sh
@@ -15,4 +15,4 @@ running it without building it will resolve in a very slow execution
     ./target/release/ray-tracing > img.ppm
 ```
 
-
+## Use
