@@ -105,7 +105,7 @@ impl Display for Vec3 {
     }
 }
  
-// -Vec3
+/// -Vec3
 impl Neg for Vec3 {
     type Output = Vec3;
  
@@ -114,28 +114,28 @@ impl Neg for Vec3 {
     }
 }
  
-// Vec3 += Vec3
+/// Vec3 += Vec3
 impl AddAssign for Vec3 {
     fn add_assign(&mut self, v: Vec3) {
         *self = *self + v;
     }
 }
  
-// Vec3 *= f64
+/// Vec3 *= f64
 impl MulAssign<f64> for Vec3 {
     fn mul_assign(&mut self, t: f64) {
         *self = *self * t;
     }
 }
  
-// Vec3 /= f64
+/// Vec3 /= f64
 impl DivAssign<f64> for Vec3 {
     fn div_assign(&mut self, t: f64) {
         *self = *self / t;
     }
 }
  
-// Vec3 + Vec3
+/// Vec3 + Vec3
 impl Add for Vec3 {
     type Output = Vec3;
  
@@ -144,7 +144,7 @@ impl Add for Vec3 {
     }
 }
  
-// Vec3 - Vec3
+/// Vec3 - Vec3
 impl Sub for Vec3 {
     type Output = Vec3;
  
@@ -153,7 +153,7 @@ impl Sub for Vec3 {
     }
 }
  
-// Vec3 * Vec3
+/// Vec3 * Vec3
 impl Mul for Vec3 {
     type Output = Vec3;
  
@@ -162,7 +162,7 @@ impl Mul for Vec3 {
     }
 }
  
-// f64 * Vec3
+/// f64 * Vec3
 impl Mul<Vec3> for f64 {
     type Output = Vec3;
  
@@ -171,7 +171,7 @@ impl Mul<Vec3> for f64 {
     }
 }
  
-// Vec3 * f64
+/// Vec3 * f64
 impl Mul<f64> for Vec3 {
     type Output = Vec3;
  
@@ -180,7 +180,7 @@ impl Mul<f64> for Vec3 {
     }
 }
  
-// Vec3 / f64
+/// Vec3 / f64
 impl Div<f64> for Vec3 {
     type Output = Vec3;
  
@@ -189,10 +189,24 @@ impl Div<f64> for Vec3 {
     }
 }
  
+/// Computes the dot product of two vectors.
+/// 
+/// The dot product is a measure of how much two vectors are pointing in the same direction.
+/// Mathematically, it is calculated as:
+/// 
+/// `dot(u, v) = u_x * v_x + u_y * v_y + u_z * v_z`
+/// 
+/// **For beginners:** If two vectors are parallel, the dot product is maximized; if they are perpendicular, the dot product is zero.
 pub fn dot(u: Vec3, v: Vec3) -> f64 {
     u.e[0] * v.e[0] + u.e[1] * v.e[1] + u.e[2] * v.e[2]
 }
- 
+
+/// Computes the cross product of two vectors.
+/// 
+/// The cross product results in a new vector that is perpendicular to both input vectors.
+/// It is useful in 3D geometry for determining orientation and normals.
+/// 
+/// **For beginners:** The magnitude of the cross product represents the area of the parallelogram formed by the two vectors.
 pub fn cross(u: Vec3, v: Vec3) -> Vec3 {
     Vec3::new(
         u.e[1] * v.e[2] - u.e[2] * v.e[1],
@@ -200,11 +214,22 @@ pub fn cross(u: Vec3, v: Vec3) -> Vec3 {
         u.e[0] * v.e[1] - u.e[1] * v.e[0],
     )
 }
- 
+
+/// Returns the unit vector of a given vector.
+/// 
+/// A unit vector is a vector with length (magnitude) of 1, keeping the same direction.
+/// It is computed by dividing the vector by its length.
+/// 
+/// **For beginners:** Unit vectors are useful for defining directions without considering magnitude.
 pub fn unit_vector(v: Vec3) -> Vec3 {
     v / v.length()
 }
- 
+
+/// Generates a random point inside a unit sphere.
+/// 
+/// This function repeatedly samples random points inside a cube until it finds one inside the unit sphere.
+/// 
+/// **For beginners:** This is useful for simulating random directions and diffusion effects.
 pub fn random_in_unit_sphere() -> Vec3 {
     loop {
         let p = Vec3::random_range(-1.0, 1.0);
@@ -214,11 +239,21 @@ pub fn random_in_unit_sphere() -> Vec3 {
         return p;
     }
 }
- 
+
+/// Generates a random unit vector.
+/// 
+/// This function produces a random vector of length 1 by normalizing a randomly generated vector inside a sphere.
+/// 
+/// **For beginners:** This is often used in random sampling for physics simulations.
 pub fn random_unit_vector() -> Vec3 {
     unit_vector(random_in_unit_sphere())
 }
- 
+
+/// Generates a random point inside a unit disk (in the XY plane).
+/// 
+/// Similar to `random_in_unit_sphere`, but constrained to a 2D disk.
+/// 
+/// **For beginners:** This is useful in optics and rendering, such as simulating depth-of-field effects.
 pub fn random_in_unit_disk() -> Vec3 {
     loop {
         let p = Vec3::new(
@@ -232,11 +267,25 @@ pub fn random_in_unit_disk() -> Vec3 {
         return p;
     }
 }
- 
+
+/// Reflects a vector around a normal.
+/// 
+/// This is used in physics simulations, such as light reflection.
+/// Mathematically, the reflection formula is:
+/// 
+/// `R = V - 2 * dot(V, N) * N`
+/// 
+/// **For beginners:** This is how light bounces off surfaces following the law of reflection.
 pub fn reflect(v: Vec3, n: Vec3) -> Vec3 {
     v - 2.0 * dot(v, n) * n
 }
- 
+
+/// Refracts a vector passing through a surface with a given refractive index ratio.
+/// 
+/// This models light bending when entering a different medium, using Snell’s Law.
+/// The refracted vector consists of a perpendicular and a parallel component.
+/// 
+/// **For beginners:** This explains effects like a straw appearing bent in water.
 pub fn refract(uv: Vec3, n: Vec3, etai_over_etat: f64) -> Vec3 {
     let cos_theta = f64::min(dot(-uv, n), 1.0);
     let r_out_perp = etai_over_etat * (uv + cos_theta * n);
