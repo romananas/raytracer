@@ -6,14 +6,17 @@ This project involves developing a minimalistic ray tracing engine capable of ge
 It can be used has a standelone programm and has a crate
 ## Installation
 
-from source
-```bash
-  git clone https://github.com/romananas/raytracer
-  cd raytracer
+1. [Install cargo] (https://doc.rust-lang.org/cargo/getting-started/installation.html)
 
-  cargo build --release
-  ./target/release/raytracer > img.ppm
-```
+2. Build the project
+
+  ```bash
+    git clone https://github.com/romananas/raytracer
+    cd raytracer
+
+    cargo build --release
+    ./target/release/raytracer > img.ppm
+  ```
 
 ## Exemples of results
 
