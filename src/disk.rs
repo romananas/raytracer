@@ -2,6 +2,7 @@ use crate::vec3::*;
 use crate::material::*;
 use crate::hittable::{HitRecord, Hittable};
 use std::sync::Arc;
+
 /// A disk-shaped hittable object in 3D space.
 /// The disk is defined by its center, radius, and a material.
 /// By default, the normal is set to point upwards along the Y-axis.
