@@ -12,7 +12,11 @@ from source
   cd raytracer
   bash build.sh
 ```
-    
+
+## Exemples of results
+
+![image](exemple.ppm)
+
 ## Acknowledgements
 
  - [The Joy of building a raytracer in rust](https://blog.singleton.io/posts/2022-01-02-raytracing-with-rust/)
