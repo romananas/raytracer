@@ -28,6 +28,11 @@ Scene asked in z01 exercise RT
 
 ![Result of the programm computer generated image](https://github.com/romananas/raytracer/blob/main/img/final_scene.png)
 
+## To -Do
+
+- [ ] Implementing a json parser
+- [ ] adding polygonal structures
+
 ## Acknowledgements
 
  - [The Joy of building a raytracer in rust](https://blog.singleton.io/posts/2022-01-02-raytracing-with-rust/)
