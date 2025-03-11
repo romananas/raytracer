@@ -15,7 +15,11 @@ from source
 
 ## Exemples of results
 
+Exemple used in The Ray Tracing Road to Rust
 ![image](exemple.ppm)
+
+Scene asked in z01 exercise RT
+![image](final_scene.ppm)
 
 ## Acknowledgements
 
