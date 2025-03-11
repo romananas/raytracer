@@ -24,116 +24,47 @@ fn ray_color(r: &Ray, world: &dyn Hittable, depth: i32) -> Color {
     (1.0 - t) * Color::new(1.0, 1.0, 1.0) + t * Color::new(0.5, 0.7, 1.0)
 }
 
-#[allow(dead_code)] 
-fn exemple() -> HittableList {
-    let mut world = HittableList::new();
- 
-    let ground_material = Arc::new(Lambertian::new(Color::new(0.5, 0.5, 0.5)));
-    world.add(Box::new(Sphere::new(
-        Point3::new(0.0, -1000.0, 0.0),
-        1000.0,
-        ground_material,
-    )));
- 
-    for a in -11..11 {
-        for b in -11..11 {
-            let choose_mat = common::random_double();
-            let center = Point3::new(
-                a as f64 + 0.9 * common::random_double(),
-                0.2,
-                b as f64 + 0.9 * common::random_double(),
-            );
- 
-            if (center - Point3::new(4.0, 0.2, 0.0)).length() > 0.9 {
-                if choose_mat < 0.8 {
-                    // Diffuse
-                    let albedo = Color::random() * Color::random();
-                    let sphere_material = Arc::new(Lambertian::new(albedo));
-                    world.add(Box::new(Sphere::new(center, 0.2, sphere_material)));
-                } else if choose_mat < 0.95 {
-                    // Metal
-                    let albedo = Color::random_range(0.5, 1.0);
-                    let fuzz = common::random_double_range(0.0, 0.5);
-                    let sphere_material = Arc::new(Metal::new(albedo, fuzz));
-                    world.add(Box::new(Sphere::new(center, 0.2, sphere_material)));
-                } else {
-                    // Glass
-                    let sphere_material = Arc::new(Dielectric::new(1.5));
-                    world.add(Box::new(Sphere::new(center, 0.2, sphere_material)));
-                }
-            }
-        }
-    }
- 
-    let material1 = Arc::new(Dielectric::new(1.5));
-    world.add(Box::new(Sphere::new(
-        Point3::new(0.0, 1.0, 0.0),
-        1.0,
-        material1,
-    )));
- 
-    let material2 = Arc::new(Lambertian::new(Color::new(0.4, 0.2, 0.1)));
-    world.add(Box::new(Sphere::new(
-        Point3::new(-4.0, 1.0, 0.0),
-        1.0,
-        material2,
-    )));
- 
-    let material3 = Arc::new(Metal::new(Color::new(0.7, 0.6, 0.5), 0.0));
-    world.add(Box::new(Sphere::new(
-        Point3::new(4.0, 1.0, 0.0),
-        1.0,
-        material3,
-    )));
-
-    world
-}
-
 fn scene() -> HittableList {
     let mut world = HittableList::new();
 
     let glass = Arc::new(Dielectric::new(1.5));
     let copper = Arc::new(Metal::new(Color::new(0.72, 0.45, 0.20), 0.1));
     let ground_material = Arc::new(Lambertian::new(Color::new(0.5, 0.5, 0.5)));
-    
+
+    // Plan plat
     world.add(Box::new(Sphere::new(
         Point3::new(0.0, -1000.0, 0.0),
         1000.0,
         ground_material,
     )));
 
-    // Copper Surface
-    world.add(Box::new(Quad::new(
-        Point3::new(-1.0, 0.0, 0.0),  // Origine en bas à gauche
-        Vec3::new(2.0, 0.0, 0.0),     // u : direction horizontale (largeur)
-        Vec3::new(0.0, 1.0, 0.0),     // v : direction verticale (hauteur)
-        copper.clone()
-    )));
-
-    // Glass Orb
+    // Sphère
     world.add(Box::new(Sphere::new(
-        Point3::new(1.0, 0.5, -1.0), // Position de la sphère
-        0.5,                         // Rayon de la sphère
-        glass, // Placeholder pour le matériau
+        Point3::new(0.0, 1.0, 0.0),
+        1.0,
+        glass,
     )));
 
-    world.add(Box::new(Cube::new(
-        Point3::new(-1.0, 0.0, -1.0), // Coin inférieur gauche
-        Point3::new(1.0, 2.0, 1.0),   // Coin supérieur droit
+    // Cube
+    world.add(Box::new(Cube::from_center(
+        Point3::new(-0.5, 0.5, 1.0),
+        1.0,
         copper.clone(),
     )));
+    
 
+    // Cylindre
     world.add(Box::new(Cylinder::new(
-        Point3::new(0.0, 1.0, 0.0), // Centre du cylindre
-        0.5,                        // Rayon
-        2.0,                        // Hauteur
-        copper.clone(),             // Matériau
-        16,                         // Nombre de segments pour la surface latérale
+        Point3::new(2.0, 0.5, 0.0),
+        0.5,
+        1.0,
+        copper.clone(),
+        16,
     )));
 
+    // Retourner la caméra modifiée avec les objets
     world
 }
-
 
 fn main() {
     // Image
@@ -148,13 +79,14 @@ fn main() {
     let world = scene();
  
     // Camera
- 
+    
+    // Nouveau regard pour la caméra
     let lookfrom = Point3::new(13.0, 2.0, 3.0);
     let lookat = Point3::new(0.0, 0.0, 0.0);
     let vup = Point3::new(0.0, 1.0, 0.0);
-    let dist_to_focus = 15.0;
+    let dist_to_focus = 10.0;
     let aperture = 0.1;
- 
+
     let cam = Camera::new(
         lookfrom,
         lookat,
@@ -164,7 +96,6 @@ fn main() {
         aperture,
         dist_to_focus,
     );
- 
     // Render
  
     print!("P3\n{} {}\n255\n", IMAGE_WIDTH, IMAGE_HEIGHT);
