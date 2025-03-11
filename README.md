@@ -17,11 +17,11 @@ from source
 
 Exemple used in The Ray Tracing Road to Rust
 
-![Alt text](https://github.com/romananas/raytracer/blob/main/img/exemple.png)
+![Result of the programm computer generated image](https://github.com/romananas/raytracer/blob/main/img/exemple.png)
 
 Scene asked in z01 exercise RT
 
-![Alt text](https://github.com/romananas/raytracer/blob/main/img/final_scene.png)
+![Result of the programm computer generated image](https://github.com/romananas/raytracer/blob/main/img/final_scene.png)
 
 ## Acknowledgements
 
