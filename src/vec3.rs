@@ -3,7 +3,7 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub};
  
 use crate::common;
  
-#[derive(Copy, Clone, Default)]
+#[derive(Debug,Copy, Clone, Default)]
 pub struct Vec3 {
     e: [f64; 3],
 }

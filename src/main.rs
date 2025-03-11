@@ -1,4 +1,5 @@
-use ray_tracing::*;
+use raytracer::*;
+mod parsing;
 
 use std::io;
 use std::sync::Arc;
@@ -136,7 +137,6 @@ fn scene() -> HittableList {
 
 fn main() {
     // Image
- 
     const ASPECT_RATIO: f64 = 3.0 / 2.0;
     const IMAGE_WIDTH: i32 = 1200;
     const IMAGE_HEIGHT: i32 = (IMAGE_WIDTH as f64 / ASPECT_RATIO) as i32;
