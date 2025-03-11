@@ -17,11 +17,11 @@ from source
 
 Exemple used in The Ray Tracing Road to Rust
 
-![Alt text](https://github.com/romananas/raytracer/img/exemple.ppm)
+![Alt text](https://github.com/romananas/raytracer/blob/main/img/exemple.ppm)
 
 Scene asked in z01 exercise RT
 
-![Alt text](https://github.com/romananas/raytracer/img/final_scene.ppm)
+![Alt text](https://github.com/romananas/raytracer/blob/main/img/final_scene.ppm)
 
 ## Acknowledgements
 
