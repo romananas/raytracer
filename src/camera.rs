@@ -119,6 +119,7 @@ impl Camera {
     /// # use raytracer::{Point3, Vec3};
     /// use raytracer::Camera;
     /// 
+    ///  // for variables see in Camera::new()
     /// # const ASPECT_RATIO: f64 = 3.0 / 2.0;
     /// # let lookfrom = Point3::new(13.0, 2.0, 3.0);
     /// # let lookat = Point3::new(0.0, 0.0, 0.0);
