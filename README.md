@@ -31,7 +31,7 @@ Scene asked in z01 exercise RT
 ## To -Do
 
 - [ ] Implementing a json parser
-- [ ] adding polygonal structures
+- [ ] Adding polygonal structures
 
 ## Acknowledgements
 
