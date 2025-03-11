@@ -10,7 +10,7 @@ It can be used has a standelone programm and has a crate
 
 2. Build the project
 
-  ```bash
+  ```sh
     git clone https://github.com/romananas/raytracer
     cd raytracer
 
