@@ -6,7 +6,7 @@ This project involves developing a minimalistic ray tracing engine capable of ge
 It can be used has a standelone programm and has a crate
 ## Installation
 
-1. ![Install cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html)
+1. [Install cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html)
 
 2. Build the project
 
