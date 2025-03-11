@@ -16,10 +16,12 @@ from source
 ## Exemples of results
 
 Exemple used in The Ray Tracing Road to Rust
-![alt text](https://github.com/romananas/raytracer/img/exemple.ppm)
+
+![Alt text](https://github.com/romananas/raytracer/img/exemple.ppm)
 
 Scene asked in z01 exercise RT
-![alt text](https://github.com/romananas/raytracer/img/final_scene.ppm)
+
+![Alt text](https://github.com/romananas/raytracer/img/final_scene.ppm)
 
 ## Acknowledgements
 
