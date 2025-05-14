@@ -13,6 +13,8 @@ mod quad;
 mod cube;
 mod cylinder;
 mod disk;
+mod texture;
+mod vec2;
 
 pub use quad::Quad;
 // pub use rayon::prelude::*;
